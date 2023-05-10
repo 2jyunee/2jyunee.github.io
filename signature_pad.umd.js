@@ -150,7 +150,7 @@
     }
   }
 
-  function throttle(fn, wait = 100) {
+  function throttle(fn, wait = 16) {
     let previous = 0;
     let timeout = null;
     let result;
