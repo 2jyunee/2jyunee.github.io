@@ -253,7 +253,7 @@
           this._strokeEnd(event);
         }
       };
-      this.velocityFilterWeight = options.velocityFilterWeight || 0.7;
+      this.velocityFilterWeight = options.velocityFilterWeight || 0.9;
       this.usePressure = options.usePressure || false;
       console.log("usePressure", this.usePressure);
       this.minWidth = options.minWidth || 0.5;
@@ -530,7 +530,7 @@
           const pressure_cur = Math.max(1 - velocity * 0.5, 0);
           console.log("pressure", endPoint.pressure, "pressure_org", pressure_org, "pressure_cur", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
-        const newWidth = this._strokeWidthByPressure(pressure_cur); // pressure;
+        const newWidth = this._strokeWidthByPressure(pressure_org); // pressure;
         const widths = {
           end: newWidth,
           start: this._lastWidth,
