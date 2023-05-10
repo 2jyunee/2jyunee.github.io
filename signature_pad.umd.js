@@ -9,7 +9,7 @@
 })(this, function () {
   "use strict";
   let lastPressure = 0.5;
-  
+
   class Point {
     constructor(x, y, pressure, time) {
       if (isNaN(x) || isNaN(y)) {
@@ -130,7 +130,7 @@
       );
     }
   }
-
+ 
   class SignatureEventTarget {
     constructor() {
       try {
@@ -412,7 +412,7 @@
       );
       const x = event.clientX;
       const y = event.clientY;
-      const pressure = event.pressure !== undefined ? event.pressure : 0.5;
+      const pressure = event.pressure !== undefined ? event.pressure : lastPressure;
       const point = this._createPoint(x, y, pressure);
       const lastPointGroup = this._data[this._data.length - 1];
       const lastPoints = lastPointGroup.points;
