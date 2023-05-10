@@ -530,7 +530,7 @@
           const pressure_cur = Math.max(1 - velocity * 0.5, 0);
           console.log("pressure", endPoint.pressure, "pressure_org", pressure_org, "pressure_cur", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
-        const newWidth = this._strokeWidthByPressure(pressure_cur); // pressure;
+        const newWidth = this._strokeWidthByPressure(pressure_org); // pressure;
         const widths = {
           end: newWidth,
           start: this._lastWidth,
@@ -545,7 +545,7 @@
       return Math.max(this.maxWidth * pressure, this.minWidth);
     }
     _strokeWidth(velocity) {
-      return Math.max(this.maxWidth / (velocity + 1), this.minWidth);
+      return Math.max(this.maxWidth / (velocity), this.minWidth);
     }
     _drawCurveSegment(x, y, width) {
       const ctx = this._ctx;
