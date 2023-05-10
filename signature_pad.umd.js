@@ -485,6 +485,7 @@
     }
     _createPoint(x, y, pressure) {
       lastPressure = pressure;
+
       const rect = this.canvas.getBoundingClientRect();
       return new Point(
         x - rect.left,
@@ -525,8 +526,9 @@
         const velocity =
           this.velocityFilterWeight * endPoint.velocityFrom(startPoint) +
           (1 - this.velocityFilterWeight) * this._lastVelocity;
-          const pressure1 = 1 / (1 + velocity);
-          const pressure = Math.max(1 - velocity * 0.5, 0);
+          const pressure_org = 1 / (1 + velocity);
+          const pressure_cur = Math.max(1 - velocity * 0.5, 0);
+          console.log("pressure", endPoint.pressure, "newWidth", newWidth, "pressure_org", pressure_org, "pressure_cur", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
         const newWidth = this._strokeWidthByPressure(pressure); // pressure;
         const widths = {
