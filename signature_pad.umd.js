@@ -259,7 +259,7 @@
       this.minWidth = options.minWidth || 0.5;
       this.maxWidth = options.maxWidth || 2.5;
       this.throttle = "throttle" in options ? options.throttle : 16;
-      this.minDistance = "minDistance" in options ? options.minDistance : 5;
+      this.minDistance = "minDistance" in options ? options.minDistance : 3;
       this.dotSize = options.dotSize || 0;
       this.penColor = options.penColor || "black";
       this.backgroundColor = options.backgroundColor || "rgba(0,0,0,0)";
