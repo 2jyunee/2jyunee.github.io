@@ -150,7 +150,7 @@
     }
   }
 
-  function throttle(fn, wait = 250) {
+  function throttle(fn, wait = 100) {
     let previous = 0;
     let timeout = null;
     let result;
@@ -545,7 +545,7 @@
       return Math.max(this.maxWidth * pressure, this.minWidth);
     }
     _strokeWidth(velocity) {
-      return Math.max(this.maxWidth / (velocity), this.minWidth);
+      return Math.max(this.maxWidth / (velocity + 1), this.minWidth);
     }
     _drawCurveSegment(x, y, width) {
       const ctx = this._ctx;
