@@ -3,10 +3,10 @@ email: kimwooglae@gmail.com
 description: |
   note
 baseurl: ''
-url: 'https://kimwooglae.github.io'
+url: 'https://2jyunee.github.io'
 timezone: Asia/Seoul
 
-repository: kimwooglae/kimwooglae.github.io
+repository: 2jyunee/2jyunee.github.io
 
 permalink: /:year/:month/:day/:title/
 
