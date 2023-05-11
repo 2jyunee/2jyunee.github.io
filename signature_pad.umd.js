@@ -526,9 +526,9 @@
         const velocity =
           this.velocityFilterWeight * endPoint.velocityFrom(startPoint) +
           (1 - this.velocityFilterWeight) * this._lastVelocity;
-          const pressure_org = 1 / (1 + velocity);
+          const pressure_org = 1 / (velocity);
           const pressure_cur = Math.max(1 - velocity * 0.5, 0);
-          console.log("pressure", endPoint.pressure, "pressure_org13", pressure_org, "pressure_cur13", pressure_cur);
+          console.log("pressure", endPoint.pressure, "pressure_org14", pressure_org, "pressure_cur14", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
         const newWidth = this._strokeWidthByPressure(pressure_org); // pressure;
         const widths = {
