@@ -528,7 +528,7 @@
           (1 - this.velocityFilterWeight) * this._lastVelocity;
           const pressure_org = 1 / (1 + velocity);
           const pressure_cur = Math.max(1 - velocity * 0.5, 0);
-          console.log("pressure", endPoint.pressure, "pressure_org19", pressure_org, "pressure_cur19", pressure_cur);
+          console.log("pressure", endPoint.pressure, "pressure_org20", pressure_org, "pressure_cur20", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
         const newWidth = this._strokeWidth(velocity); // pressure;
         const widths = {
@@ -545,7 +545,7 @@
       return Math.max(this.maxWidth * pressure, this.minWidth);
     }
     _strokeWidth(velocity) {
-      return Math.max((this.maxWidth / (velocity + 1)) * 0.1, this.minWidth);
+      return Math.max((this.maxWidth / (velocity + 1)), this.minWidth);
     }
     _drawCurveSegment(x, y, width) {
       const ctx = this._ctx;
