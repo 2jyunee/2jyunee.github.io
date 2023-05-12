@@ -150,7 +150,7 @@
     }
   }
 
-  function throttle(fn, wait = 300) {
+  function throttle(fn, wait = 16) {
     let previous = 0;
     let timeout = null;
     let result;
@@ -528,7 +528,7 @@
           (1 - this.velocityFilterWeight) * this._lastVelocity;
           const pressure_org = 1 / (1 + velocity);
           const pressure_cur = Math.max(1 - velocity * 0.5, 0);
-          console.log("pressure", endPoint.pressure, "pressure_org20", pressure_org, "pressure_cur20", pressure_cur);
+          console.log("pressure", endPoint.pressure, "pressure_org21", pressure_org, "pressure_cur21", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
         const newWidth = this._strokeWidth(velocity); // pressure;
         const widths = {
