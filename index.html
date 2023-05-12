@@ -102,9 +102,17 @@
         customConsole(window);
         var canvasPressure = document.getElementById("signature-pad-pressure");
 
+        // var signaturePadPressure = new SignaturePad(canvasPressure, {
+        //   backgroundColor: "rgb(255, 255, 255)", // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+        //   usePressure: true,
+        // });
+
         var signaturePadPressure = new SignaturePad(canvasPressure, {
-          backgroundColor: "rgb(255, 255, 255)", // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
-          usePressure: true,
+            backgroundColor: "rgb(255, 255, 255)", // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+            minWidth:0.1,
+            maxWidth:4,
+            minDistance:0.1,
+            usePressure:true
         });
 
         var canvasVelocity = document.getElementById("signature-pad-velocity");
