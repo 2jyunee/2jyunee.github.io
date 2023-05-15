@@ -458,26 +458,27 @@
       const lastPoints = this._lastPoints;
       const delAreaWidth = Math.abs(lastPoints[0].x - lastPoints[lastPoints.length-1].x);
       const delAreaHeigth = Math.abs(lastPoints[0].y - lastPoints[lastPoints.length-1].y);
-      const degrees = Math.abs(this._lastWidth);
+      const degrees = Math.abs(this._lastWidth/2);
       const radian = degrees * (Math.PI/180);
 
-      const circleX = (Math.cos(30) * radian) + lastPoints[0].x;
-      const circleY = (Math.sin(30) * radian) + lastPoints[0].y;
-      const circleX2 = (Math.cos(-30) * radian) + lastPoints[0].x;
-      const circleY2 = (Math.sin(-30) * radian) + lastPoints[0].y;
+      const circleX = (Math.cos(30) * radian) + lastPoints[1].x;
+      const circleY = (Math.sin(30) * radian) + lastPoints[1].y;
+      const circleX2 = (Math.cos(-30) * radian) + lastPoints[1].x;
+      const circleY2 = (Math.sin(-30) * radian) + lastPoints[1].y;
 
       console.log(circleX, circleY, circleX2, circleY2);
 
-      ctx.beginPath();
+      
 
-      ctx.fillStyle = "#000000";
+      
 
       let lastX = lastPoints[lastPoints.length-1].x;
       let lastY = lastPoints[lastPoints.length-1].y;
-
-      ctx.moveTo(circleX, circleY);
-      ctx.lineTo(lastX+30, lastY+30);
-      ctx.lineTo(circleX2+30, circleY2+30);
+      ctx.beginPath();
+      ctx.fillStyle = "#000000";
+      ctx.moveTo(circleX, circleY + 2.5);
+      ctx.lineTo(lastX+10, lastY);
+      ctx.lineTo(circleX2, circleY2 - 2.5);
       
       ctx.fill();
       
