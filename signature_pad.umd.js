@@ -480,8 +480,8 @@
       let lastY = lastPoints[lastPoints.length-1].y;
 
       ctx.moveTo(circleX, circleY);
-      ctx.lineTo(lastX+1, lastY+1);
-      ctx.lineTo(circleX2+1, circleY2+1);
+      ctx.lineTo(lastX+10, lastY+10);
+      ctx.lineTo(circleX2+10, circleY2+10);
       
       ctx.fill();
       
