@@ -459,8 +459,8 @@
       const points = this._data[this._data.length-1].points;
       // const delAreaWidth = Math.abs(lastPoints[0].x - lastPoints[lastPoints.length-1].x);
       // const delAreaHeigth = Math.abs(lastPoints[0].y - lastPoints[lastPoints.length-1].y);
-      const delAreaWidth = Math.abs(points[points.length-3].x - points[points.length-1].x);
-      const delAreaHeigth = Math.abs(points[points.length-3].y - points[points.length-1].y);
+      const delAreaWidth = Math.abs(lastPoints[lastPoints.length-3].x - lastPoints[lastPoints.length-1].x);
+      const delAreaHeigth = Math.abs(lastPoints[lastPoints.length-3].y - lastPoints[lastPoints.length-1].y);
       const radius = Math.abs(this._lastWidth/2);
       const radian = 90 * (Math.PI/180);
       const radian2 = 180 * (Math.PI/180);
@@ -484,7 +484,7 @@
       let lastY = lastPoints[lastPoints.length-1].y;
 
 
-      ctx.clearRect(circleX, lastY, delAreaWidth, delAreaHeigth);
+      //ctx.clearRect(lastX, lastY, delAreaWidth, delAreaHeigth);
 
       console.log(lastX, lastY, circleX, circleY, circleX2, circleY2);
       ctx.beginPath();
@@ -495,9 +495,9 @@
       // ctx.lineTo(lastX+10, lastY);
       // ctx.lineTo(circleX2, circleY2 - 2.5);
       //this._strokeWidthByPressure(lastPoints[lastPoints.length-2].pressure);
-      ctx.moveTo(circleX + this._lastWidth/2, circleY);
-      ctx.lineTo(lastX, lastY + this._lastWidth/2);
-      ctx.lineTo(circleX2 - this._lastWidth/2, circleY2);      
+      ctx.moveTo(circleX, circleY);
+      ctx.lineTo(lastX, lastY);
+      ctx.lineTo(circleX2, circleY2);      
       ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
       ctx.fill();
       
