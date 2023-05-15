@@ -481,9 +481,9 @@
       // ctx.lineTo(lastX+10, lastY);
       // ctx.lineTo(circleX2, circleY2 - 2.5);
       
-      ctx.moveTo(circleX, circleY);
+      ctx.moveTo(circleX + this._lastWidth/2, circleY);
       ctx.lineTo(lastX, lastY);
-      ctx.lineTo(circleX2, circleY2);      
+      ctx.lineTo(circleX2 - this._lastWidth/2, circleY2);      
       ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
       ctx.fill();
       
