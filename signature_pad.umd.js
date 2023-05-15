@@ -468,10 +468,6 @@
 
       console.log(circleX, circleY, circleX2, circleY2);
 
-      ctx.fillStyle = this.backgroundColor;
-      ctx.clearRect(lastPoints[0].x, lastPoints[lastPoints.length-1].y, delAreaWidth, delAreaHeigth);
-      ctx.fillRect(lastPoints[0].x, lastPoints[lastPoints.length-1].y, delAreaWidth, delAreaHeigth);
-
       ctx.beginPath();
 
       ctx.fillStyle = "#000000";
