@@ -479,9 +479,9 @@
       // ctx.lineTo(lastX+10, lastY);
       // ctx.lineTo(circleX2, circleY2 - 2.5);
       
-      ctx.moveTo(circleX, circleY);
+      ctx.moveTo(circleX+radius, circleY);
       ctx.lineTo(lastX, lastY);
-      ctx.lineTo(circleX2, circleY2);      
+      ctx.lineTo(circleX2+radius, circleY2);      
       ctx.fill();
       
       this._data = [];
