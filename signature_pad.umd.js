@@ -473,10 +473,10 @@
       // const circleX2 = (Math.cos(radian2) * radius) + lastPoints[lastPoints.length-2].x;
       // const circleY2 = (Math.sin(radian2) * radius) + lastPoints[lastPoints.length-2].y;
 
-      const circleX = (Math.cos(radian) * radius) + points[points.length-3].x;
-      const circleY = (Math.sin(radian) * radius) + points[points.length-3].y;
-      const circleX2 = (Math.cos(radian2) * radius) + points[points.length-3].x;
-      const circleY2 = (Math.sin(radian2) * radius) + points[points.length-3].y;
+      const circleX = (Math.cos(radian) * radius) + points[points.length-2].x;
+      const circleY = (Math.sin(radian) * radius) + points[points.length-2].y;
+      const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x;
+      const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y;
 
       
 
