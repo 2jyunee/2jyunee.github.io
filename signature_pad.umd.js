@@ -456,21 +456,35 @@
       const { _ctx: ctx, canvas } = this;
 
       const lastPoints = this._lastPoints;
-      const delAreaWidth = Math.abs(lastPoints[0].x - lastPoints[lastPoints.length-1].x);
-      const delAreaHeigth = Math.abs(lastPoints[0].y - lastPoints[lastPoints.length-1].y);
+      const points = this._data[this._data.length-1].points;
+      // const delAreaWidth = Math.abs(lastPoints[0].x - lastPoints[lastPoints.length-1].x);
+      // const delAreaHeigth = Math.abs(lastPoints[0].y - lastPoints[lastPoints.length-1].y);
+      const delAreaWidth = Math.abs(points[points.length-3].x - points[points.length-1].x);
+      const delAreaHeigth = Math.abs(points[points.length-3].y - points[points.length-1].y);
       const radius = Math.abs(this._lastWidth/2);
       const radian = 90 * (Math.PI/180);
       const radian2 = 180 * (Math.PI/180);
 
-      const circleX = (Math.cos(radian) * radius) + lastPoints[lastPoints.length-2].x;
-      const circleY = (Math.sin(radian) * radius) + lastPoints[lastPoints.length-2].y;
-      const circleX2 = (Math.cos(radian2) * radius) + lastPoints[lastPoints.length-2].x;
-      const circleY2 = (Math.sin(radian2) * radius) + lastPoints[lastPoints.length-2].y;
+      
+
+
+      // const circleX = (Math.cos(radian) * radius) + lastPoints[lastPoints.length-2].x;
+      // const circleY = (Math.sin(radian) * radius) + lastPoints[lastPoints.length-2].y;
+      // const circleX2 = (Math.cos(radian2) * radius) + lastPoints[lastPoints.length-2].x;
+      // const circleY2 = (Math.sin(radian2) * radius) + lastPoints[lastPoints.length-2].y;
+
+      const circleX = (Math.cos(radian) * radius) + points[points.length-3].x;
+      const circleY = (Math.sin(radian) * radius) + points[points.length-3].y;
+      const circleX2 = (Math.cos(radian2) * radius) + points[points.length-3].x;
+      const circleY2 = (Math.sin(radian2) * radius) + points[points.length-3].y;
 
       
 
       let lastX = lastPoints[lastPoints.length-1].x;
       let lastY = lastPoints[lastPoints.length-1].y;
+
+
+      ctx.clearRect(circleX, lastY, delAreaWidth, delAreaHeigth);
 
       console.log(lastX, lastY, circleX, circleY, circleX2, circleY2);
       ctx.beginPath();
