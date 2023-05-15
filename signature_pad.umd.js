@@ -458,6 +458,15 @@
       const lastPoints = this._lastPoints;
       const delAreaWidth = Math.abs(lastPoints[0].x - lastPoints[lastPoints.length-1].x);
       const delAreaHeigth = Math.abs(lastPoints[0].y - lastPoints[lastPoints.length-1].y);
+      const degrees = Math.abs(this._lastWidth);
+      const radian = degrees * (Math.PI/180);
+
+      const circleX = (Math.cos(30) * radian) + lastPoints[0].x;
+      const circleY = (Math.sin(30) * radian) + lastPoints[0].y;
+      const circleX2 = (Math.cos(-30) * radian) + lastPoints[0].x;
+      const circleY2 = (Math.sin(-30) * radian) + lastPoints[0].y;
+
+      console.log(circleX, circleY, circleX2, circleY2);
 
       ctx.fillStyle = this.backgroundColor;
       ctx.clearRect(lastPoints[0].x, lastPoints[lastPoints.length-1].y, delAreaWidth, delAreaHeigth);
@@ -465,28 +474,17 @@
 
       ctx.beginPath();
 
-      //here
-      let temp1 = this._strokeWidthByPressure(lastPoints[0].pressure);
-      ctx.lineWidth = temp1;
-      // ctx.moveTo(lastPoints[0].x, lastPoints[0].y); // Move the pen to (30, 50)
-      ctx.lineTo(lastPoints[0].x, lastPoints[0].y); // Draw a line to (150, 100)
-      ctx.stroke();
+      ctx.fillStyle = "#000000";
 
-      let temp2 = this._strokeWidthByPressure(lastPoints[1].pressure);
-      ctx.lineWidth = temp2 * 0.1;
-      // ctx.moveTo(lastPoints[1].x, lastPoints[1].y); // Move the pen to (30, 50)
-      ctx.lineTo(lastPoints[1].x, lastPoints[1].y); // Draw a line to (150, 100)
-      ctx.stroke();
+      let lastX = lastPoints[lastPoints.length-1].x;
+      let lastY = lastPoints[lastPoints.length-1].y;
 
-      let temp3 = this._strokeWidthByPressure(lastPoints[2].pressure);
-      ctx.lineWidth = temp3 * 0.2;
-      // ctx.moveTo(lastPoints[2].x, lastPoints[2].y); // Move the pen to (30, 50)
-      ctx.lineTo(lastPoints[2].x, lastPoints[2].y); // Draw a line to (150, 100)
-      ctx.stroke();
-
-      console.log("here");
-      console.log(this._lastWidth);
-
+      ctx.moveTo(circleX, circleY);
+      ctx.lineTo(lastX+1, lastY+1);
+      ctx.lineTo(circleX2+1, circleY2+1);
+      
+      ctx.fill();
+      
       this._data = [];
       this._reset();
       this._isEmpty = true;
