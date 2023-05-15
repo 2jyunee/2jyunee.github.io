@@ -452,6 +452,46 @@
     }
     _strokeEnd(event) {
       this._strokeUpdate(event);
+      debugger;
+      const { _ctx: ctx, canvas } = this;
+
+      const lastPoints = this._lastPoints;
+      const delAreaWidth = Math.abs(lastPoints[0].x - lastPoints[lastPoints.length-1].x);
+      const delAreaHeigth = Math.abs(lastPoints[0].y - lastPoints[lastPoints.length-1].y);
+
+      ctx.fillStyle = this.backgroundColor;
+      ctx.clearRect(lastPoints[0].x, lastPoints[lastPoints.length-1].y, delAreaWidth, delAreaHeigth);
+      ctx.fillRect(lastPoints[0].x, lastPoints[lastPoints.length-1].y, delAreaWidth, delAreaHeigth);
+
+      ctx.beginPath();
+
+      //here
+      let temp1 = this._strokeWidthByPressure(lastPoints[0].pressure);
+      ctx.lineWidth = temp1;
+      // ctx.moveTo(lastPoints[0].x, lastPoints[0].y); // Move the pen to (30, 50)
+      ctx.lineTo(lastPoints[0].x, lastPoints[0].y); // Draw a line to (150, 100)
+      ctx.stroke();
+
+      let temp2 = this._strokeWidthByPressure(lastPoints[1].pressure);
+      ctx.lineWidth = temp2 * 0.1;
+      // ctx.moveTo(lastPoints[1].x, lastPoints[1].y); // Move the pen to (30, 50)
+      ctx.lineTo(lastPoints[1].x, lastPoints[1].y); // Draw a line to (150, 100)
+      ctx.stroke();
+
+      let temp3 = this._strokeWidthByPressure(lastPoints[2].pressure);
+      ctx.lineWidth = temp3 * 0.2;
+      // ctx.moveTo(lastPoints[2].x, lastPoints[2].y); // Move the pen to (30, 50)
+      ctx.lineTo(lastPoints[2].x, lastPoints[2].y); // Draw a line to (150, 100)
+      ctx.stroke();
+
+      console.log("here");
+      console.log(this._lastWidth);
+
+      this._data = [];
+      this._reset();
+      this._isEmpty = true;
+      //this._data[this._data.length-1].points
+
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
     }
     _handlePointerEvents() {
@@ -528,7 +568,7 @@
           (1 - this.velocityFilterWeight) * this._lastVelocity;
           const pressure_org = 1 / (1 + velocity);
           const pressure_cur = Math.max(1 - velocity * 0.5, 0);
-          console.log("pressure", endPoint.pressure, "pressure_org22", pressure_org, "pressure_cur22", pressure_cur);
+          console.log("pressure", endPoint.pressure, "pressure_org24", pressure_org, "pressure_cur24", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
         const newWidth = this._strokeWidth(velocity); // pressure;
         const widths = {
@@ -541,9 +581,15 @@
         return widths;
       }
     }
+    // _strokeWidthByPressure(pressure) {
+    //   return Math.max(this.maxWidth * pressure, this.minWidth);
+    // }
+    
     _strokeWidthByPressure(pressure) {
-      return Math.max(this.maxWidth * pressure, this.minWidth);
+      // return Math.max(this.maxWidth * pressure, this.minWidth);
+        return pressure * 8;
     }
+
     _strokeWidth(velocity) {
       return Math.max((this.maxWidth / (velocity + 1)), this.minWidth);
     }
@@ -595,6 +641,20 @@
       ctx.fillStyle = options.penColor;
       ctx.fill();
     }
+
+    _redrawEndDot() {
+      const ctx = this._ctx;
+      const width =
+        options.dotSize > 0
+          ? options.dotSize
+          : (options.minWidth + options.maxWidth) / 2;
+      ctx.beginPath();
+      this._drawCurveSegment(point.x, point.y, width);
+      ctx.closePath();
+      ctx.fillStyle = options.penColor;
+      ctx.fill();
+    }
+
     _fromData(pointGroups, drawCurve, drawDot) {
       for (const group of pointGroups) {
         const { penColor, dotSize, minWidth, maxWidth, points } = group;
