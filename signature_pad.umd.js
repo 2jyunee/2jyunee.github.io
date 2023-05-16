@@ -490,26 +490,26 @@
       ctx.beginPath();
       ctx.fillStyle = "#000000";
       console.log("here");
-      ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
+      ctx.lineWidth=this._lastWidth ? this._lastWidth/2 - 1 : 4/2 - 1;
       console.log(ctx.lineWidth);
       debugger;
-      // ctx.moveTo(circleX, circleY + 2.5);
-      // ctx.lineTo(lastX+10, lastY);
-      // ctx.lineTo(circleX2, circleY2 - 2.5);
+
+      // 두 점 사이 거리..
+      // let temp1 = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
+
+      // if(temp1 > this._lastWidth) {
+      //   temp1-this._lastWidth; // 차이를 좌표에
+      // }
+
       ctx.moveTo(circleX, circleY);
       ctx.lineTo(lastX, lastY);
-
-
       ctx.lineTo(circleX2, circleY2);
       ctx.fill();
       ctx.stroke();
       
-      // ctx.fill();
-      
       this._data = [];
       this._reset();
       this._isEmpty = true;
-      //this._data[this._data.length-1].points
 
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
     }
