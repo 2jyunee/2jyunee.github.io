@@ -452,54 +452,38 @@
     }
     _strokeEnd(event) {
       this._strokeUpdate(event);
-      debugger;
+
       const { _ctx: ctx, canvas } = this;
 
       const lastPoints = this._lastPoints;
       const points = this._data[this._data.length-1].points;
-      // const delAreaWidth = Math.abs(lastPoints[0].x - lastPoints[lastPoints.length-1].x);
-      // const delAreaHeigth = Math.abs(lastPoints[0].y - lastPoints[lastPoints.length-1].y);
-      const delAreaWidth = Math.abs(lastPoints[lastPoints.length-3].x - lastPoints[lastPoints.length-1].x);
-      const delAreaHeigth = Math.abs(lastPoints[lastPoints.length-3].y - lastPoints[lastPoints.length-1].y);
       const radius = Math.abs(this._lastWidth/2);
       const radian = 0 * (Math.PI/180);
       const radian2 = 180 * (Math.PI/180);
 
-      
-
-
-      // const circleX = (Math.cos(radian) * radius) + lastPoints[lastPoints.length-2].x;
-      // const circleY = (Math.sin(radian) * radius) + lastPoints[lastPoints.length-2].y;
-      // const circleX2 = (Math.cos(radian2) * radius) + lastPoints[lastPoints.length-2].x;
-      // const circleY2 = (Math.sin(radian2) * radius) + lastPoints[lastPoints.length-2].y;
 
       const circleX = (Math.cos(radian) * radius) + points[points.length-2].x;
       const circleY = (Math.sin(radian) * radius) + points[points.length-2].y;
       const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x;
       const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y;
 
-      
 
       let lastX = lastPoints[lastPoints.length-1].x;
       let lastY = lastPoints[lastPoints.length-1].y;
 
 
-      //ctx.clearRect(lastX, lastY, delAreaWidth, delAreaHeigth);
-
       console.log(lastX, lastY, circleX, circleY, circleX2, circleY2);
       ctx.beginPath();
       ctx.fillStyle = "#000000";
-      console.log("here");
       ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
-      console.log(ctx.lineWidth);
       
 
-      // 두 점 사이 거리..
-      let temp1 = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
-      debugger;
-      if(temp1 > this._lastWidth) {
-        let temp2 = Math.abs(temp1-this._lastWidth);
-        let gap = (temp2/2).toFixed();
+      // 두 점 사이 거리
+      let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
+      
+      if(d > this._lastWidth) {
+        let tempGap = Math.abs(d - this._lastWidth);
+        let gap = (tempGap/2).toFixed();
         
         if(circleX > circleX2) {
           ctx.moveTo(circleX-gap, circleY);
@@ -512,9 +496,9 @@
         }
         
 
-      } else if(temp1 < this._lastWidth){
-        let temp2 = Math.abs(temp1-this._lastWidth);
-        let gap = (temp2/2).toFixed();
+      } else if(d < this._lastWidth){
+        let tempGap = Math.abs(d - this._lastWidth);
+        let gap = (tempGap/2).toFixed();
 
         ctx.moveTo(circleX+gap, circleY);
         ctx.lineTo(lastX, lastY);
