@@ -462,7 +462,7 @@
       const delAreaWidth = Math.abs(lastPoints[lastPoints.length-3].x - lastPoints[lastPoints.length-1].x);
       const delAreaHeigth = Math.abs(lastPoints[lastPoints.length-3].y - lastPoints[lastPoints.length-1].y);
       const radius = Math.abs(this._lastWidth/2);
-      const radian = 90 * (Math.PI/180);
+      const radian = 0 * (Math.PI/180);
       const radian2 = 180 * (Math.PI/180);
 
       
@@ -496,9 +496,10 @@
       // ctx.moveTo(circleX, circleY + 2.5);
       // ctx.lineTo(lastX+10, lastY);
       // ctx.lineTo(circleX2, circleY2 - 2.5);
-      //this._strokeWidthByPressure(lastPoints[lastPoints.length-2].pressure);
-      ctx.moveTo(circleX+1.5, circleY);
+      ctx.moveTo(circleX, circleY);
       ctx.lineTo(lastX, lastY);
+
+
       ctx.lineTo(circleX2, circleY2);      
       
       
