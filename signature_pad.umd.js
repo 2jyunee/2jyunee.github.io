@@ -490,7 +490,7 @@
       ctx.beginPath();
       ctx.fillStyle = "#000000";
       console.log("here");
-      ctx.lineWidth=this._lastWidth ? this._lastWidth/2 - 1 : 4/2 - 1;
+      ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
       console.log(ctx.lineWidth);
       debugger;
 
