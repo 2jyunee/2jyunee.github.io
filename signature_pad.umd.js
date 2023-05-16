@@ -485,17 +485,10 @@
         let tempGap = Math.abs(d - this._lastWidth);
         let gap = (tempGap/2).toFixed();
         
-        if(circleX > circleX2) {
-          ctx.moveTo(circleX-gap, circleY);
-          ctx.lineTo(lastX, lastY);
-          ctx.lineTo(circleX2-gap, circleY2);
-        } else {
-          ctx.moveTo(circleX+gap, circleY);
-          ctx.lineTo(lastX, lastY);
-          ctx.lineTo(circleX2+gap, circleY2);
-        }
+        ctx.moveTo(circleX-gap, circleY);
+        ctx.lineTo(lastX, lastY);
+        ctx.lineTo(circleX2-gap, circleY2);
         
-
       } else if(d < this._lastWidth){
         let tempGap = Math.abs(d - this._lastWidth);
         let gap = (tempGap/2).toFixed();
