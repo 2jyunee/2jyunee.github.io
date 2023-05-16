@@ -492,18 +492,40 @@
       console.log("here");
       ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
       console.log(ctx.lineWidth);
-      debugger;
+      
 
       // 두 점 사이 거리..
-      // let temp1 = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
+      let temp1 = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
+      debugger;
+      if(temp1 > this._lastWidth) {
+        let temp2 = Math.abs(temp1-this._lastWidth);
+        let gap = (temp2/2).toFixed();
+        
+        if(circleX > circleX2) {
+          ctx.moveTo(circleX-gap, circleY);
+          ctx.lineTo(lastX, lastY);
+          ctx.lineTo(circleX2-gap, circleY2);
+        } else {
+          ctx.moveTo(circleX+gap, circleY);
+          ctx.lineTo(lastX, lastY);
+          ctx.lineTo(circleX2+gap, circleY2);
+        }
+        
 
-      // if(temp1 > this._lastWidth) {
-      //   temp1-this._lastWidth; // 차이를 좌표에
-      // }
+      } else if(temp1 < this._lastWidth){
+        let temp2 = Math.abs(temp1-this._lastWidth);
+        let gap = (temp2/2).toFixed();
 
-      ctx.moveTo(circleX, circleY);
-      ctx.lineTo(lastX, lastY);
-      ctx.lineTo(circleX2, circleY2);
+        ctx.moveTo(circleX+gap, circleY);
+        ctx.lineTo(lastX, lastY);
+        ctx.lineTo(circleX2+gap, circleY2);
+      } else {
+        ctx.moveTo(circleX, circleY);
+        ctx.lineTo(lastX, lastY);
+        ctx.lineTo(circleX2, circleY2);
+      }
+
+      
       ctx.fill();
       ctx.stroke();
       
