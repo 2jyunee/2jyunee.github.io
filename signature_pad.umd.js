@@ -490,7 +490,7 @@
       ctx.beginPath();
       ctx.fillStyle = "#000000";
       console.log("here");
-      ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
+      ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
       console.log(ctx.lineWidth);
       debugger;
       // ctx.moveTo(circleX, circleY + 2.5);
@@ -500,10 +500,11 @@
       ctx.lineTo(lastX, lastY);
 
 
-      ctx.lineTo(circleX2, circleY2);      
-      
-      
+      ctx.lineTo(circleX2, circleY2);
       ctx.fill();
+      ctx.stroke();
+      
+      // ctx.fill();
       
       this._data = [];
       this._reset();
