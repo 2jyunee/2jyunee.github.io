@@ -489,16 +489,19 @@
       console.log(lastX, lastY, circleX, circleY, circleX2, circleY2);
       ctx.beginPath();
       ctx.fillStyle = "#000000";
-      
+      console.log("here");
+      ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
+      console.log(ctx.lineWidth);
       debugger;
       // ctx.moveTo(circleX, circleY + 2.5);
       // ctx.lineTo(lastX+10, lastY);
       // ctx.lineTo(circleX2, circleY2 - 2.5);
       //this._strokeWidthByPressure(lastPoints[lastPoints.length-2].pressure);
-      ctx.moveTo(circleX, circleY);
+      ctx.moveTo(circleX+1.5, circleY);
       ctx.lineTo(lastX, lastY);
       ctx.lineTo(circleX2, circleY2);      
-      ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
+      
+      
       ctx.fill();
       
       this._data = [];
