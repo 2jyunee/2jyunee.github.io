@@ -566,7 +566,7 @@
         ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
         
         ctx.stroke();
-        //ctx.fill();
+        ctx.fill();
       }
 
       
