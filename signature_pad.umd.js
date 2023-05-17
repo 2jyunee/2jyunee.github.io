@@ -513,7 +513,7 @@
 
         let gap = d > 4.5 ? ctx.lineWidth*0.8 : 0;
         if(d < 2.36 ) gap = -(ctx.lineWidth*1.1);
-        if(d > 2.36 && d < 4.5) gap = -(ctx.lineWidth*0.3);
+        
         ctx.moveTo(circleX-gap, circleY);
         ctx.lineTo(lastX, lastY);
         ctx.lineTo(circleX2+gap, circleY2);
