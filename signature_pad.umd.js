@@ -518,9 +518,9 @@
 
 
         let dots = [
-          {x:circleX+gap, y:circleY},
+          {x:circleX, y:circleY},
           {x:lastX, y:lastY},
-          {x:circleX2-gap, y:circleY2},
+          {x:circleX2, y:circleY2},
         ];
 
         // ctx.beginPath();
@@ -542,7 +542,7 @@
         // ctx.lineTo(lastX, lastY);
         // ctx.lineTo(circleX2+gap, circleY2);
 
-        var x = circleX+gap,
+        var x = circleX,
             y = circleY;
         
         ctx.beginPath();
@@ -566,7 +566,7 @@
         ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
         
         ctx.stroke();
-        //ctx.fill();
+        ctx.fill();
       }
 
       
