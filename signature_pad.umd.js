@@ -509,9 +509,9 @@
         ctx.lineTo(lastX, lastY);
         ctx.lineTo(circleX2+gap, circleY2);
       } else {
-        ctx.moveTo(circleX-(ctx.lineWidth*0.5), circleY);
+        ctx.moveTo(circleX-(ctx.lineWidth*0.7), circleY);
         ctx.lineTo(lastX, lastY);
-        ctx.lineTo(circleX2+(ctx.lineWidth*0.5), circleY2);
+        ctx.lineTo(circleX2+(ctx.lineWidth*0.7), circleY2);
       }
 
       
