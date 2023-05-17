@@ -535,7 +535,7 @@
         // ctx.stroke();
 
         ctx.fillStyle = "#000000";
-        ctx.lineWidth=this._lastWidth ? this._lastWidth/0.5 : 4/0.5;
+        ctx.lineWidth=this._lastWidth ? this._lastWidth/3 : 4/3;
         
         
         // ctx.moveTo(circleX-gap, circleY);
