@@ -476,7 +476,6 @@
       ctx.beginPath();
       ctx.fillStyle = "#000000";
       ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
-      console.log(this._lastWidth);
       
 
       // 두 점 사이 거리
@@ -511,67 +510,18 @@
         ctx.lineTo(lastX, lastY);
         ctx.lineTo(circleX2+gap, circleY2);
       } else {
-        
+
         let gap = d > 4.5 ? ctx.lineWidth*0.8 : 0;
         if(d < 2.36 ) gap = -(ctx.lineWidth*1.1);
-        if(d > 2.36 && d<4.5) gap = -(ctx.lineWidth*1.1);
-
-
-        let dots = [
-          {x:circleX+gap, y:circleY},
-          {x:lastX, y:lastY},
-          {x:circleX2-gap, y:circleY2},
-        ];
-
-        // ctx.beginPath();
-        // ctx.lineWidth = 1;
-        // ctx.strokeStyle = '#000000';
-
-        // ctx.moveTo( dots[ 0 ].x+gap, dots[ 0 ].y );
-
-        // for( var i = 1; i < dots.length; ++i )
-        //   ctx.lineTo( dots[ i ].x, dots[ i ].y );
-
-        // ctx.stroke();
-
-        ctx.fillStyle = "#000000";
-        ctx.lineWidth=this._lastWidth ? this._lastWidth/1.8 : 4/1.8;
         
-        
-        // ctx.moveTo(circleX-gap, circleY);
-        // ctx.lineTo(lastX, lastY);
-        // ctx.lineTo(circleX2+gap, circleY2);
-
-        var x = circleX+gap,
-            y = circleY;
-        
-        ctx.beginPath();
-        ctx.moveTo( x, y );
-        
-        for( var i = 0; i < dots.length; ++i ){
-          
-          var x2 = dots[ i ].x,
-              y2 = dots[ i ].y,
-              
-              mx = ( x + x2 ) / 2,
-              my = ( y + y2 ) / 2;
-          
-          ctx.quadraticCurveTo( x, y, mx, my );
-          
-          x = x2;
-          y = y2;
-          
-        }
-        
-        ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
-        
-        ctx.stroke();
-        ctx.fill();
+        ctx.moveTo(circleX-gap, circleY);
+        ctx.lineTo(lastX, lastY);
+        ctx.lineTo(circleX2+gap, circleY2);
       }
 
       
-      // ctx.fill();
-      // ctx.stroke();
+      ctx.fill();
+      ctx.stroke();
       
       this._data = [];
       this._reset();
@@ -854,36 +804,3 @@
 
   return SignaturePad;
 });
-
-
-
-function smoothLine( points ){
-
-	ctx.lineWidth = 3;
-	ctx.strokeStyle = '#eee';
-	var x = points[ 0 ].x,
-			y = points[ 0 ].y;
-	
-	ctx.beginPath();
-	ctx.moveTo( x, y );
-	
-	for( var i = 0; i < points.length; ++i ){
-		
-		var x2 = points[ i ].x,
-				y2 = points[ i ].y,
-				
-				mx = ( x + x2 ) / 2,
-				my = ( y + y2 ) / 2;
-		
-		ctx.quadraticCurveTo( x, y, mx, my );
-		
-		x = x2;
-		y = y2;
-		
-	}
-	
-	ctx.lineTo( points[ points.length - 1 ].x, points[ points.length - 1 ].y );
-	
-	ctx.stroke();
-
-}
