@@ -482,8 +482,9 @@
       let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
       
       if(d > this._lastWidth) {
-        let tempGap = Math.abs(d - this._lastWidth);
+        let tempGap = Math.abs(d - this._lastWidth).toFixed();
         let gap = (tempGap/2).toFixed();
+        console.log(tempGap, gap);
 
         if(tempGap > this.maxWidth) {
           gap = (this.maxWidth/2).toFixed();
@@ -495,9 +496,11 @@
         ctx.lineTo(circleX2-gap, circleY2);
         
       } else if(d < this._lastWidth){
-        let tempGap = Math.abs(d - this._lastWidth);
+        let tempGap = Math.abs(d - this._lastWidth).toFixed();
         let gap = (tempGap/2).toFixed();
-        
+
+        console.log(tempGap, gap);
+
         if(tempGap > this.maxWidth) {
           gap = (this.maxWidth/2).toFixed();
         }
