@@ -481,7 +481,6 @@
       // 두 점 사이 거리
       let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
       console.log("d:" + d);
-      console.log("pressure:" + this.pressure);
       
       if(d > this._lastWidth) {
         let tempGap = Math.abs(d - this._lastWidth).toFixed();
@@ -512,7 +511,7 @@
         ctx.lineTo(circleX2+gap, circleY2);
       } else {
 
-        let gap = d > 6.5 ? ctx.lineWidth*0.7 : ctx.lineWidth*0.5;
+        let gap = d > 6.5 ? ctx.lineWidth*0.8 : 0;
         ctx.moveTo(circleX-gap, circleY);
         ctx.lineTo(lastX, lastY);
         ctx.lineTo(circleX2+gap, circleY2);
