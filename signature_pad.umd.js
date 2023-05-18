@@ -567,6 +567,17 @@
       ctx.stroke();
       ctx.fill();
 
+      ctx.fillStyle = "#000000";
+      ctx.lineWidth=1;
+
+      ctx.moveTo(circleX, circleY);
+      ctx.lineTo(lastX, lastY);
+      ctx.lineTo(circleX2, circleY2);
+      
+      ctx.fill();
+
+      
+
       this._data = [];
       this._reset();
       this._isEmpty = true;
