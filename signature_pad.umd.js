@@ -980,8 +980,8 @@
         
               // circleX, circleY에 대한 곡선
               const pRadian = 60 * (Math.PI/180);
-              const pX = (Math.cos(pRadian) * (radius*2)) + circleX;
-              const pY = (Math.sin(pRadian) * (radius*2)) + circleY;
+              const pX = (Math.cos(pRadian) * (radius*3)) + circleX;
+              const pY = (Math.sin(pRadian) * (radius*3)) + circleY;
               let dots = [
                 {x:circleX, y:circleY},
                 {x:pX, y:pY},
