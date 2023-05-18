@@ -537,9 +537,10 @@
       
       ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
       
-      //ctx.stroke();
+      ctx.stroke();
       ctx.fill();
 
+      ctx.beginPath();
       var x = circleX2,
           y = circleY2;
       
@@ -563,7 +564,7 @@
       
       ctx.lineTo( dots2[ dots2.length - 1 ].x, dots2[ dots2.length - 1 ].y );
       
-      //ctx.stroke();
+      ctx.stroke();
       ctx.fill();
 
       this._data = [];
