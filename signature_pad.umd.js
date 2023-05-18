@@ -462,10 +462,10 @@
       const radian2 = 180 * (Math.PI/180);
 
 
-      const circleX = (Math.cos(radian) * radius) + points[points.length-2].x;
-      const circleY = (Math.sin(radian) * radius) + points[points.length-2].y;
-      const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x;
-      const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y;
+      const circleX = (Math.cos(radian) * radius) + points[points.length-2].x-0.5;
+      const circleY = (Math.sin(radian) * radius) + points[points.length-2].y-0.5;
+      const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x+0.5;
+      const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y+0.5;
 
 
       let lastX = lastPoints[lastPoints.length-1].x;
@@ -484,19 +484,23 @@
       ctx.beginPath();
       ctx.fillStyle = "#000000";
       ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
-      console.log(this._lastWidth);
-      
 
       // 두 점 사이 거리
       let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
       console.log("d:" + d);
 
+      let gap = 0;
+      if(d > 4) {
+        gap = 2.5;
+      }
+
+
       // circleX, circleY에 대한 곡선
-      const pRadian = 60 * (Math.PI/180);
+      const pRadian = 45 * (Math.PI/180);
       const pX = (Math.cos(pRadian) * (radius)) + circleX;
       const pY = (Math.sin(pRadian) * (radius)) + circleY;
       let dots = [
-        {x:circleX, y:circleY},
+        {x:circleX-gap, y:circleY},
         {x:pX, y:pY},
         {x:lastX, y:lastY},
       ];
@@ -506,7 +510,7 @@
       const pX2 = (Math.cos(pRadian2) * (radius*1.7)) + circleX2;
       const pY2 = (Math.sin(pRadian2) * (radius*1.7)) + circleY2;
       let dots2 = [
-        {x:circleX, y:circleY},
+        {x:circleX2-gap, y:circleY2},
         {x:pX2, y:pY2},
         {x:lastX, y:lastY},
       ];
@@ -515,7 +519,7 @@
       ctx.fillStyle = "#000000";
       ctx.lineWidth=.1;
 
-      var x = circleX,
+      var x = circleX-0.5,
           y = circleY;
       
       ctx.beginPath();
@@ -536,11 +540,15 @@
       }
       
       ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
-      ctx.lineTo( dots[0].x, dots[0].y );
+      ctx.lineWidth=0.5;
+      ctx.lineTo( lastX, lastY );
+      ctx.lineTo(circleX2, circleY2);
       
-      ctx.stroke();
+      
+     ctx.stroke();
       ctx.fill();
 
+      ctx.lineWidth=.1;
       ctx.beginPath();
       var x = circleX2,
           y = circleY2;
@@ -564,27 +572,25 @@
       }
       
       ctx.lineTo( dots2[ dots2.length - 1 ].x, dots2[ dots2.length - 1 ].y );
-      ctx.lineTo( dots2[0].x, dots2[0].y );
-      
+      ctx.lineWidth=0.5;
+      ctx.lineTo( lastX, lastY );
+      ctx.lineTo(circleX, circleY );
+
       ctx.stroke();
       ctx.fill();
 
-      // ctx.fillStyle = "#000000";
-      // ctx.lineWidth=1;
+      context.globalCompositeOperation = "destination-out";
+      context.strokeStyle = "rgba(0,0,0,1)";
 
-      // ctx.moveTo(circleX-5, circleY-1);
-      // ctx.lineTo(lastX, lastY);
-      // ctx.lineTo(circleX2-5, circleY2-1);
-      
-      // ctx.fill();
-
-      
+      ctx.arc(lastX, lastY, this._lastWidth, 0, 2 * Math.PI, false);
 
       this._data = [];
       this._reset();
       this._isEmpty = true;
 
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
+
+      
     }
     _handlePointerEvents() {
       this._drawningStroke = false;
