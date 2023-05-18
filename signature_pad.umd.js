@@ -979,7 +979,7 @@
               console.log("d:" + d);
         
               // circleX, circleY에 대한 곡선
-              const pRadian = 45 * (Math.PI/180);
+              const pRadian = 60 * (Math.PI/180);
               const pX = (Math.cos(pRadian) * (radius*2)) + circleX;
               const pY = (Math.sin(pRadian) * (radius*2)) + circleY;
               let dots = [
@@ -989,7 +989,7 @@
               ];
 
               // circleX2, circleY2에 대한 곡선
-              const pRadian2 = 135 * (Math.PI/180);
+              const pRadian2 = 150 * (Math.PI/180);
               const pX2 = (Math.cos(pRadian2) * (radius*2)) + circleX2;
               const pY2 = (Math.sin(pRadian2) * (radius*2)) + circleY2;
               let dots2 = [
