@@ -1000,7 +1000,7 @@
 
         
               ctx.fillStyle = "#000000";
-              ctx.lineWidth=this._lastWidth ? this._lastWidth/1.8 : 4/1.8;
+              ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
         
               var x = circleX,
                   y = circleY;
@@ -1025,7 +1025,7 @@
               ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
               
               ctx.stroke();
-              ctx.fill();
+              //ctx.fill();
 
               var x = circleX2,
                   y = circleY2;
@@ -1051,7 +1051,7 @@
               ctx.lineTo( dots2[ dots2.length - 1 ].x, dots2[ dots2.length - 1 ].y );
               
               ctx.stroke();
-              ctx.fill();
+              //ctx.fill();
               
               this._data = [];
               this._reset();
