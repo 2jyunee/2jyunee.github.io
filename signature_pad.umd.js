@@ -452,7 +452,7 @@
     }
     _strokeEnd(event) {
       this._strokeUpdate(event);
-        
+
       const { _ctx: ctx, canvas } = this;
 
       const lastPoints = this._lastPoints;
@@ -471,115 +471,58 @@
       let lastX = lastPoints[lastPoints.length-1].x;
       let lastY = lastPoints[lastPoints.length-1].y;
 
-      // ctx.beginPath();
-      // ctx.globalCompositeOperation = "destination-out";
-      // ctx.strokeStyle = "rgba(0,0,0,1)";
-      // ctx.lineWidth = this._lastWidth ? this._lastWidth+3 : 4+3;
-      // ctx.moveTo(points[points.length-2].x, points[points.length-2].y);
-      // ctx.lineTo(lastX, lastY);
 
-      console.log(points);
-      console.log(lastPoints);
-
+      console.log(lastX, lastY, circleX, circleY, circleX2, circleY2);
       ctx.beginPath();
       ctx.fillStyle = "#000000";
-      ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
-      console.log(this._lastWidth);
+      ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
       
 
       // 두 점 사이 거리
       let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
       console.log("d:" + d);
-
-      // circleX, circleY에 대한 곡선
-      const pRadian = 60 * (Math.PI/180);
-      const pX = (Math.cos(pRadian) * (radius)) + circleX;
-      const pY = (Math.sin(pRadian) * (radius)) + circleY;
-      let dots = [
-        {x:circleX, y:circleY},
-        {x:pX, y:pY},
-        {x:lastX, y:lastY},
-      ];
-
-      // circleX2, circleY2에 대한 곡선
-      const pRadian2 = 270 * (Math.PI/180);
-      const pX2 = (Math.cos(pRadian2) * (radius*1.7)) + circleX2;
-      const pY2 = (Math.sin(pRadian2) * (radius*1.7)) + circleY2;
-      let dots2 = [
-        {x:circleX, y:circleY},
-        {x:pX2, y:pY2},
-        {x:lastX, y:lastY},
-      ];
-
-
-      ctx.fillStyle = "#000000";
-      ctx.lineWidth=.1;
-
-      var x = circleX,
-          y = circleY;
       
-      ctx.beginPath();
-      ctx.moveTo( x, y );
-      
-      for( var i = 0; i < dots.length; ++i ){
-        var x2 = dots[ i ].x,
-            y2 = dots[ i ].y,
-            
-            mx = ( x + x2 ) / 2,
-            my = ( y + y2 ) / 2;
+      if(d > this._lastWidth) {
+        let tempGap = Math.abs(d - this._lastWidth).toFixed();
+        let gap = (tempGap/2).toFixed();
+        console.log(tempGap, gap);
 
-        ctx.quadraticCurveTo( x, y, mx, my );
+        if(tempGap > this.maxWidth) {
+          gap = (this.maxWidth/2).toFixed();
+        }
         
-        x = x2;
-        y = y2;
         
+        ctx.moveTo(circleX-gap, circleY);
+        ctx.lineTo(lastX, lastY);
+        ctx.lineTo(circleX2-gap, circleY2);
+        
+      } else if(d < this._lastWidth){
+        let tempGap = Math.abs(d - this._lastWidth).toFixed();
+        let gap = (tempGap/2).toFixed();
+
+        console.log(tempGap, gap);
+
+        if(tempGap > this.maxWidth) {
+          gap = (this.maxWidth/2).toFixed();
+        }
+
+        ctx.moveTo(circleX+gap, circleY);
+        ctx.lineTo(lastX, lastY);
+        ctx.lineTo(circleX2+gap, circleY2);
+      } else {
+
+        let gap = d > 4.5 ? ctx.lineWidth*0.8 : 0;
+        if(d < 2.36 ) gap = -(ctx.lineWidth*1.1);
+        
+        ctx.moveTo(circleX-gap, circleY);
+        ctx.lineTo(lastX, lastY);
+        ctx.lineTo(circleX2+gap, circleY2);
       }
+
       
-      ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
-      ctx.lineTo( dots[0].x, dots[0].y );
-      
-      ctx.stroke();
       ctx.fill();
-
-      ctx.beginPath();
-      var x = circleX2,
-          y = circleY2;
-      
-      
-      ctx.moveTo( x, y );
-
-      for( var i = 0; i < dots2.length; ++i ){
-        
-        var x2 = dots2[ i ].x,
-            y2 = dots2[ i ].y,
-            
-            mx = ( x + x2 ) / 2,
-            my = ( y + y2 ) / 2;
-        
-        ctx.quadraticCurveTo( x, y, mx, my );
-        
-        x = x2;
-        y = y2;
-        
-      }
-      
-      ctx.lineTo( dots2[ dots2.length - 1 ].x, dots2[ dots2.length - 1 ].y );
-      ctx.lineTo( dots2[0].x, dots2[0].y );
-      
       ctx.stroke();
-      ctx.fill();
-
-      // ctx.fillStyle = "#000000";
-      // ctx.lineWidth=1;
-
-      // ctx.moveTo(circleX-5, circleY-1);
-      // ctx.lineTo(lastX, lastY);
-      // ctx.lineTo(circleX2-5, circleY2-1);
       
-      // ctx.fill();
-
-      
-
       this._data = [];
       this._reset();
       this._isEmpty = true;
