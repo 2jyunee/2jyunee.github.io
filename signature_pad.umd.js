@@ -970,7 +970,7 @@
               // console.log(lastX, lastY, circleX, circleY, circleX2, circleY2);
               ctx.beginPath();
               ctx.fillStyle = "#000000";
-              ctx.lineWidth=this._lastWidth ? this._lastWidth/1.8 : 4/1.8;
+              ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
               console.log(this._lastWidth);
               
         
