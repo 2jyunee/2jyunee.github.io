@@ -536,6 +536,7 @@
       }
       
       ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
+      ctx.lineTo( dots[0].x, dots[0].y );
       
       ctx.stroke();
       ctx.fill();
@@ -563,18 +564,19 @@
       }
       
       ctx.lineTo( dots2[ dots2.length - 1 ].x, dots2[ dots2.length - 1 ].y );
+      ctx.lineTo( dots2[0].x, dots2[0].y );
       
       ctx.stroke();
       ctx.fill();
 
-      ctx.fillStyle = "#000000";
-      ctx.lineWidth=1;
+      // ctx.fillStyle = "#000000";
+      // ctx.lineWidth=1;
 
-      ctx.moveTo(circleX, circleY);
-      ctx.lineTo(lastX, lastY);
-      ctx.lineTo(circleX2, circleY2);
+      // ctx.moveTo(circleX-5, circleY-1);
+      // ctx.lineTo(lastX, lastY);
+      // ctx.lineTo(circleX2-5, circleY2-1);
       
-      ctx.fill();
+      // ctx.fill();
 
       
 
