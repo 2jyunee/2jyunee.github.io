@@ -452,7 +452,7 @@
     }
     _strokeEnd(event) {
       this._strokeUpdate(event);
-
+        
       const { _ctx: ctx, canvas } = this;
 
       const lastPoints = this._lastPoints;
@@ -462,72 +462,135 @@
       const radian2 = 180 * (Math.PI/180);
 
 
-      const circleX = (Math.cos(radian) * radius) + points[points.length-2].x;
-      const circleY = (Math.sin(radian) * radius) + points[points.length-2].y;
-      const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x;
-      const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y;
+      const circleX = (Math.cos(radian) * radius) + points[points.length-2].x-0.5;
+      const circleY = (Math.sin(radian) * radius) + points[points.length-2].y-0.5;
+      const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x+0.5;
+      const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y+0.5;
 
 
       let lastX = lastPoints[lastPoints.length-1].x;
       let lastY = lastPoints[lastPoints.length-1].y;
 
+      // ctx.beginPath();
+      // ctx.globalCompositeOperation = "destination-out";
+      // ctx.strokeStyle = "rgba(0,0,0,1)";
+      // ctx.lineWidth = this._lastWidth ? this._lastWidth+3 : 4+3;
+      // ctx.moveTo(points[points.length-2].x, points[points.length-2].y);
+      // ctx.lineTo(lastX, lastY);
 
-      console.log(lastX, lastY, circleX, circleY, circleX2, circleY2);
+      console.log(points);
+      console.log(lastPoints);
+
       ctx.beginPath();
       ctx.fillStyle = "#000000";
-      ctx.lineWidth=this._lastWidth ? this._lastWidth/2 : 4/2;
-      
+      ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
 
       // 두 점 사이 거리
       let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
       console.log("d:" + d);
-      
-      if(d > this._lastWidth) {
-        let tempGap = Math.abs(d - this._lastWidth).toFixed();
-        let gap = (tempGap/2).toFixed();
-        console.log(tempGap, gap);
 
-        if(tempGap > this.maxWidth) {
-          gap = (this.maxWidth/2).toFixed();
-        }
-        
-        
-        ctx.moveTo(circleX-gap, circleY);
-        ctx.lineTo(lastX, lastY);
-        ctx.lineTo(circleX2-gap, circleY2);
-        
-      } else if(d < this._lastWidth){
-        let tempGap = Math.abs(d - this._lastWidth).toFixed();
-        let gap = (tempGap/2).toFixed();
-
-        console.log(tempGap, gap);
-
-        if(tempGap > this.maxWidth) {
-          gap = (this.maxWidth/2).toFixed();
-        }
-
-        ctx.moveTo(circleX+gap, circleY);
-        ctx.lineTo(lastX, lastY);
-        ctx.lineTo(circleX2+gap, circleY2);
-      } else {
-
-        let gap = d > 4.5 ? ctx.lineWidth*0.8 : 0;
-        if(d < 2.36 ) gap = -(ctx.lineWidth*1.1);
-        
-        ctx.moveTo(circleX-gap, circleY);
-        ctx.lineTo(lastX, lastY);
-        ctx.lineTo(circleX2+gap, circleY2);
+      let gap = 0;
+      if(d > 4) {
+        gap = 2.5;
       }
 
+
+      // circleX, circleY에 대한 곡선
+      const pRadian = 45 * (Math.PI/180);
+      const pX = (Math.cos(pRadian) * (radius)) + circleX;
+      const pY = (Math.sin(pRadian) * (radius)) + circleY;
+      let dots = [
+        {x:circleX-gap, y:circleY},
+        {x:pX, y:pY},
+        {x:lastX, y:lastY},
+      ];
+
+      // circleX2, circleY2에 대한 곡선
+      const pRadian2 = 270 * (Math.PI/180);
+      const pX2 = (Math.cos(pRadian2) * (radius*1.7)) + circleX2;
+      const pY2 = (Math.sin(pRadian2) * (radius*1.7)) + circleY2;
+      let dots2 = [
+        {x:circleX2-gap, y:circleY2},
+        {x:pX2, y:pY2},
+        {x:lastX, y:lastY},
+      ];
+
+
+      ctx.fillStyle = "#000000";
+      ctx.lineWidth=.1;
+
+      var x = circleX-0.5,
+          y = circleY;
       
+      ctx.beginPath();
+      ctx.moveTo( x, y );
+      
+      for( var i = 0; i < dots.length; ++i ){
+        var x2 = dots[ i ].x,
+            y2 = dots[ i ].y,
+            
+            mx = ( x + x2 ) / 2,
+            my = ( y + y2 ) / 2;
+
+        ctx.quadraticCurveTo( x, y, mx, my );
+        
+        x = x2;
+        y = y2;
+        
+      }
+      
+      ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
+      ctx.lineWidth=0.5;
+      ctx.lineTo( lastX, lastY );
+      ctx.lineTo(circleX2, circleY2);
+      
+      
+     ctx.stroke();
       ctx.fill();
-      ctx.stroke();
+
+      ctx.lineWidth=.1;
+      ctx.beginPath();
+      var x = circleX2,
+          y = circleY2;
       
+      
+      ctx.moveTo( x, y );
+
+      for( var i = 0; i < dots2.length; ++i ){
+        
+        var x2 = dots2[ i ].x,
+            y2 = dots2[ i ].y,
+            
+            mx = ( x + x2 ) / 2,
+            my = ( y + y2 ) / 2;
+        
+        ctx.quadraticCurveTo( x, y, mx, my );
+        
+        x = x2;
+        y = y2;
+        
+      }
+      
+      ctx.lineTo( dots2[ dots2.length - 1 ].x, dots2[ dots2.length - 1 ].y );
+      ctx.lineWidth=0.5;
+      ctx.lineTo( lastX, lastY );
+      ctx.lineTo(circleX, circleY );
+
+      ctx.stroke();
+      ctx.fill();
+
+      context.globalCompositeOperation = "destination-out";
+      context.strokeStyle = "rgba(0,0,0,1)";
+
+      ctx.arc(lastX, lastY, this._lastWidth, 0, 2 * Math.PI, false);
+
       this._data = [];
       this._reset();
       this._isEmpty = true;
 
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
+
+      
     }
     _handlePointerEvents() {
       this._drawningStroke = false;
