@@ -9,8 +9,8 @@
 })(this, function () {
   "use strict";
   let lastPressure = 0.5;
-  let lastW = 0;
   let isLastPoint = false;
+  let lastW = 0;
 
   class Point {
     constructor(x, y, pressure, time) {
@@ -374,6 +374,7 @@
     }
     _strokeBegin(event) {
       isLastPoint = false;
+
       this.dispatchEvent(new CustomEvent("beginStroke", { detail: event }));
       const newPointGroup = {
         dotSize: this.dotSize,
@@ -456,167 +457,6 @@
     }
     _strokeEnd(event) {
       this._strokeUpdate(event);
-        
-    //   const { _ctx: ctx, canvas } = this;
-
-    //   const lastPoints = this._lastPoints;
-    //   const points = this._data[this._data.length-1].points;
-    //   const radius = Math.abs(this._lastWidth/2);
-
-    //   let lastX = lastPoints[lastPoints.length-1].x;
-    //   let lastY = lastPoints[lastPoints.length-1].y;
-
-
-    //   const tempRadian = Math.atan((lastY-points[points.length-2].y) / (lastX-points[points.length-2].x));  // 마지막 점과의 각도(라디안 단위)
-    //   const rad1 = 90 * (Math.PI/180);
-    //   const rad2 = 180 * (Math.PI/180);
-    //   const radGap1 = tempRadian - tempRadian;
-    //   const radGap2 = rad1 - rad2;
-
-    //   const radian = 0 * (Math.PI/180);
-    //   const radian2 = 180 * (Math.PI/180);
-
-
-    //   // const circleX = (Math.cos(radian) * radius) + points[points.length-2].x-0.5;
-    //   // const circleY = (Math.sin(radian) * radius) + points[points.length-2].y-0.5;
-    //   // const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x+0.5;
-    //   // const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y+0.5;
-
-    //   const circleX = (Math.cos(radGap1) * radius) + points[points.length-2].x;
-    //   const circleY = (Math.sin(radGap1) * radius) + points[points.length-2].y;
-    //   const circleX2 = (Math.cos(radGap2) * radius) + points[points.length-2].x;
-    //   const circleY2 = (Math.sin(radGap2) * radius) + points[points.length-2].y;
-
-
-      
-
-    //   // ctx.beginPath();
-    //   // ctx.globalCompositeOperation = "destination-out";
-    //   // ctx.strokeStyle = "rgba(0,0,0,1)";
-    //   // ctx.lineWidth = this._lastWidth ? this._lastWidth+3 : 4+3;
-    //   // ctx.moveTo(points[points.length-2].x, points[points.length-2].y);
-    //   // ctx.lineTo(lastX, lastY);
-
-
-    //   ctx.strokeStyle = "#FF0000";
-    //   ctx.moveTo(circleX, circleY);
-    //   ctx.beginPath();
-    //   ctx.lineTo(lastX, lastY);
-    //   ctx.lineTo(circleX2, circleY2);
-      
-
-    //   console.log(points);
-    //   console.log(lastPoints);
-
-    //   ctx.beginPath();
-    //   ctx.fillStyle = "#000000";
-    //   // ctx.lineWidth=this._lastWidth ? this._lastWidth : 4;
-    //   ctx.lineWidth = this._strokeWidthByPressure(lastPressure);
-
-    //   // 두 점 사이 거리
-    //   let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
-    //   console.log("d:" + d);
-
-    //   let gap = 0;
-    //   if(d > 4) {
-    //     gap = 2.5;
-    //   }
-
-
-    //   // circleX, circleY에 대한 곡선
-    //   const pRadian = 45 * (Math.PI/180);
-    //   const pX = (Math.cos(pRadian) * (radius)) + circleX;
-    //   const pY = (Math.sin(pRadian) * (radius)) + circleY;
-    //   let dots = [
-    //     {x:circleX-gap, y:circleY},
-    //     {x:pX, y:pY},
-    //     {x:lastX, y:lastY},
-    //   ];
-
-    //   // circleX2, circleY2에 대한 곡선
-    //   const pRadian2 = 270 * (Math.PI/180);
-    //   const pX2 = (Math.cos(pRadian2) * (radius*1.7)) + circleX2;
-    //   const pY2 = (Math.sin(pRadian2) * (radius*1.7)) + circleY2;
-    //   let dots2 = [
-    //     {x:circleX2-gap, y:circleY2},
-    //     {x:pX2, y:pY2},
-    //     {x:lastX, y:lastY},
-    //   ];
-
-
-    //   ctx.fillStyle = "#000000";
-    //   // ctx.lineWidth=8;
-    //   ctx.lineWidth = this._strokeWidthByPressure(lastPressure);
-
-    //   var x = circleX-0.5,
-    //       y = circleY;
-      
-    //   ctx.beginPath();
-    //   ctx.moveTo( x, y );
-      
-    //   for( var i = 0; i < dots.length; ++i ){
-    //     var x2 = dots[ i ].x,
-    //         y2 = dots[ i ].y,
-            
-    //         mx = ( x + x2 ) / 2,
-    //         my = ( y + y2 ) / 2;
-
-    //     ctx.quadraticCurveTo( x, y, mx, my );
-        
-    //     x = x2;
-    //     y = y2;
-        
-    //   }
-      
-    //   ctx.lineTo( dots[ dots.length - 1 ].x, dots[ dots.length - 1 ].y );
-    //   ctx.lineWidth=0.5;
-    //   ctx.lineTo( lastX, lastY );
-    //   ctx.lineTo(circleX2, circleY2);
-      
-      
-    //  ctx.stroke();
-    //   ctx.fill();
-
-    //   ctx.lineWidth=.1;
-    //   ctx.beginPath();
-    //   var x = circleX2,
-    //       y = circleY2;
-      
-      
-    //   ctx.moveTo( x, y );
-
-    //   for( var i = 0; i < dots2.length; ++i ){
-        
-    //     var x2 = dots2[ i ].x,
-    //         y2 = dots2[ i ].y,
-            
-    //         mx = ( x + x2 ) / 2,
-    //         my = ( y + y2 ) / 2;
-        
-    //     ctx.quadraticCurveTo( x, y, mx, my );
-        
-    //     x = x2;
-    //     y = y2;
-        
-    //   }
-      
-    //   ctx.lineTo( dots2[ dots2.length - 1 ].x, dots2[ dots2.length - 1 ].y );
-    //   ctx.lineWidth=0.5;
-    //   ctx.lineTo( lastX, lastY );
-    //   ctx.lineTo(circleX, circleY );
-
-    //   ctx.stroke();
-    //   ctx.fill();
-
-    //   context.globalCompositeOperation = "destination-out";
-    //   context.strokeStyle = "rgba(0,0,0,1)";
-
-    //   //ctx.arc(lastX, lastY, this._lastWidth, 0, 2 * Math.PI, false);
-
-      // this._data = [];
-      // this._reset();
-      // this._isEmpty = true;
-
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
       setTimeout(()=>{
         this._drawLastLine(event);
@@ -627,34 +467,34 @@
     _drawLastLine(event) {
       const { _ctx: ctx, canvas } = this;
       isLastPoint = true;
+
       const lastPoints = this._lastPoints;
       const points = this._data[this._data.length-1].points;
       let radius = this._lastWidth/2;
       let width = this._lastWidth;
 
       if(this._lastWidth > this.maxWidth) {
-        radius = this.maxWidth/1.8;
+        radius = this.maxWidth/1.7;
         width = this.maxWidth;
       }
 
       let lastX = lastPoints[lastPoints.length-1].x;
       let lastY = lastPoints[lastPoints.length-1].y;
 
-
-      const tempRadian = Math.atan((lastY-points[points.length-2].y) / (lastX-points[points.length-2].x));  // 마지막 점과의 각도(라디안 단위)
-      const rad1 = 90 * (Math.PI/180);
-      const rad2 = 180 * (Math.PI/180);
-      const radGap1 = tempRadian - tempRadian;
-      const radGap2 = rad1 - rad2;
-
-      const radian = 0 * (Math.PI/180);
-      const radian2 = 180 * (Math.PI/180);
+      let rad = Math.abs(Math.atan(lastX - points[0].y)/(lastX - points[0].x));
+      let criteriaRad = Math.abs(10 * (Math.PI/180));
+      let degree1 = 0;
+      let degree2 = 180;
 
 
-      // const circleX = (Math.cos(radian) * radius) + points[points.length-2].x-0.5;
-      // const circleY = (Math.sin(radian) * radius) + points[points.length-2].y-0.5;
-      // const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x+0.5;
-      // const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y+0.5;
+      // 수평선에 가까울 때..
+      if(rad < criteriaRad && rad == criteriaRad) {
+        degree1 = 90;
+        degree2 = 270;
+      }
+
+      const radian = degree1 * (Math.PI/180);
+      const radian2 = degree2 * (Math.PI/180);
 
       const circleX = (Math.cos(radian) * radius) + points[points.length-2].x;
       const circleY = (Math.sin(radian) * radius) + points[points.length-2].y;
@@ -666,13 +506,11 @@
 
       // 두 점 사이 거리
       let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
-      console.log("d:" + d);
 
       let gap = 0;
       if(d > this._lastWidth && d == this._lastWidth) {
         gap = 2.5;
       }
-
 
       // circleX, circleY에 대한 곡선
       const pRadian = 45 * (Math.PI/180);
@@ -696,9 +534,8 @@
 
 
       ctx.fillStyle = "#000000";
-
-      // ctx.lineWidth=8;
-      ctx.lineWidth = this._strokeWidthByPressure(lastPressure);
+      // ctx.lineWidth = this._strokeWidthByPressure(lastPressure);
+      ctx.lineWidth = this._lastWidth;
 
       var x = circleX-0.5,
           y = circleY;
@@ -760,10 +597,7 @@
       ctx.stroke();
       ctx.fill();
 
-      // context.globalCompositeOperation = "destination-out";
-      // context.strokeStyle = "rgba(0,0,0,1)";
 
-      //ctx.arc(lastX, lastY, this._lastWidth, 0, 2 * Math.PI, false);
 
       this._data = [];
       this._reset();
@@ -872,7 +706,6 @@
       const ctx = this._ctx;
       ctx.moveTo(x, y);
       ctx.arc(x, y, width, 0, 2 * Math.PI, false);
-      lastW = width;
       this._isEmpty = false;
     }
     _drawCurve(curve, options) {
