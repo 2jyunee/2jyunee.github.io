@@ -457,10 +457,33 @@
     }
     _strokeEnd(event) {
       this._strokeUpdate(event);
+      isLastPoint = true;
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
-      setTimeout(()=>{
-        this._drawLastLine(event);
-      });
+
+      // const { _ctx: ctx, canvas } = this;
+      
+      for(let i=0; i<this._data.length;i++) {
+        let len = this._data[i].points.length;
+        if(len > 10 || len == 10) {
+          let p = this._data[i].points[len-4].pressure;
+          this._data[i].points[len-4].pressure = p-0.01;
+          this._data[i].points[len-4].pressure = p-0.02;
+          this._data[i].points[len-3].pressure = p-0.03;
+          this._data[i].points[len-2].pressure = p-0.04;
+          this._data[i].points[len-1].pressure = p-0.05;
+        } else if(len < 6){
+          let p = this._data[i].points[len-2].pressure;
+          this._data[i].points[len-2].pressure = p-0.02;
+          this._data[i].points[len-1].pressure = p-0.04;
+        }
+        
+      } 
+      this.fromData(this._data);
+
+      
+      // setTimeout(()=>{
+      //   this._drawLastLine(event);
+      // });
       
       
     }

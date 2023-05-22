@@ -97,7 +97,7 @@
 
         // console.system("Running fiddle");
       // };
-
+var signaturePadPressure;
       window.onload = function () {
         // customConsole(window);
         var canvasPressure = document.getElementById("signature-pad-pressure");
@@ -107,7 +107,7 @@
         //   usePressure: true,
         // });
 
-        var signaturePadPressure = new SignaturePad(canvasPressure, {
+        signaturePadPressure = new SignaturePad(canvasPressure, {
             backgroundColor: "rgb(255, 255, 255)", // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
             minWidth:0.1,
             //maxWidth:4,
@@ -217,6 +217,12 @@
         }
         return new Blob([uInt8Array], { type: contentType });
       }
+
+      function test() {
+
+        var aa = signaturePadPressure.toData();
+        alert(JSON.stringify(aa));
+      }
     </script>
   </head>
   <body>
@@ -242,6 +248,7 @@
       <button id="save-svg">Save as SVG</button>
       <button id="change-color">Change color</button>
       <button id="clear">Clear</button>
+      <button id="aaa" onclick="test()">toData</button>
     </div>
     <div>
       <img
