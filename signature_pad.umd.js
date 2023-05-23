@@ -469,10 +469,11 @@
 
 
       // 수평선에 가까울 때..
-      if(rad < criteriaRad && rad == criteriaRad) {
+      if((rad < criteriaRad || rad == criteriaRad) && (lastX > points[0].x+30)) {
         degree1 = 90;
         degree2 = 270;
-      }
+      } 
+      
 
       const radian = degree1 * (Math.PI/180);
       const radian2 = degree2 * (Math.PI/180);
