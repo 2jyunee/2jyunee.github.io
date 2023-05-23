@@ -11,6 +11,7 @@
   let lastPressure = 0.5;
   let isLastPoint = false;
   let lastW = 0;
+  let prePointsLength = 0;
 
   class Point {
     constructor(x, y, pressure, time) {
@@ -461,23 +462,86 @@
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
 
       // const { _ctx: ctx, canvas } = this;
+      if(this._data.length < prePointsLength) {
+        prePointsLength = 0;
+      }
+
+      let startIdx = this._data.length - prePointsLength + 1;
+      if(this._data.length == 1) {
+        startIdx = 0;
+      }
       
-      for(let i=0; i<this._data.length;i++) {
+
+      
+      for(let i=startIdx; i<this._data.length;i++) {
         let len = this._data[i].points.length;
+
         if(len > 10 || len == 10) {
-          let p = this._data[i].points[len-4].pressure;
-          this._data[i].points[len-4].pressure = p-0.01;
-          this._data[i].points[len-4].pressure = p-0.02;
-          this._data[i].points[len-3].pressure = p-0.03;
-          this._data[i].points[len-2].pressure = p-0.04;
-          this._data[i].points[len-1].pressure = p-0.05;
-        } else if(len < 6){
-          let p = this._data[i].points[len-2].pressure;
-          this._data[i].points[len-2].pressure = p-0.02;
-          this._data[i].points[len-1].pressure = p-0.04;
+          let lastArr = this._data[i].points.slice(len-4);
+          let pressures = [];
+          for(let point of lastArr) {
+            pressures.push(point.pressure);
+          }
+
+          let maxNum = Math.max(...pressures);
+          let minNum = Math.min(...pressures);
+          let gap = maxNum-minNum;
+          let unit = gap/4;
+          console.log(gap);
+          console.log(unit);
+          
+          for(let j=0; j<lastArr.length; j++) {
+            let p = lastArr[j].pressure;
+            
+            lastArr[j].pressure = (p-unit < 0) ? 0.001 : p-unit;
+            lastArr[j].pressure = (p-unit < 0) ? 0.001 : p-unit;
+          }
+
+        } else if(len < 10 || len > 5){
+          let lastArr = this._data[i].points.slice(len-3);
+          let pressures = [];
+          for(let point of lastArr) {
+            pressures.push(point.pressure);
+          }
+
+          let maxNum = Math.max(...pressures);
+          let minNum = Math.min(...pressures);
+          let gap = maxNum-minNum;
+          let unit = gap/3;
+          console.log(gap);
+          console.log(unit);
+          for(let j=0; j<lastArr.length; j++) {
+            let p = lastArr[j].pressure;
+            console.log(p);
+            lastArr[j].pressure = (p-unit < 0) ? 0.001 : p-unit;
+            lastArr[j].pressure = (p-unit < 0) ? 0.001 : p-unit;
+          }
+
+
+        } else if(len < 5 && len > 2){
+          let lastArr = this._data[i].points.slice(len-2);
+          let pressures = [];
+          for(let point of lastArr) {
+            pressures.push(point.pressure);
+          }
+
+          let maxNum = Math.max(...pressures);
+          let minNum = Math.min(...pressures);
+          let gap = maxNum-minNum;
+          let unit = gap/2;
+          console.log(gap);
+          console.log(unit);
+
+          for(let j=0; j<lastArr.length; j++) {
+            let p = lastArr[j].pressure;
+            console.log(p);
+            lastArr[j].pressure = (p-unit < 0) ? 0.001 : p-unit;
+            lastArr[j].pressure = (p-unit < 0) ? 0.001 : p-unit;
+          }
         }
         
       } 
+      prePointsLength = this._data.length;
       this.fromData(this._data);
 
       
