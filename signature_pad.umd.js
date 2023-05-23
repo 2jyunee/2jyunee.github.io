@@ -258,7 +258,7 @@
       };
       this.velocityFilterWeight = options.velocityFilterWeight || 0.8;
       this.usePressure = options.usePressure || false;
-      console.log("usePressure", this.usePressure);
+      
       this.minWidth = options.minWidth || 0.5;
       this.maxWidth = options.maxWidth || 2.5;
       this.throttle = "throttle" in options ? options.throttle : 16;
@@ -316,14 +316,14 @@
       this.canvas.style.msTouchAction = "none";
       this.canvas.style.userSelect = "none";
       if (window.PointerEvent) {
-        console.log("Using Pointer Events");
+        
         this._handlePointerEvents();
       } else {
         this._handleMouseEvents();
-        console.log("Using Mouse Events");
+        
         if ("ontouchstart" in window) {
           this._handleTouchEvents();
-          console.log("Using Touch Events");
+          
         }
       }
     }
@@ -395,26 +395,7 @@
       this.dispatchEvent(
         new CustomEvent("beforeUpdateStroke", { detail: event })
       );
-      console.log(
-        "clientX",
-        this.toFixed(event.clientX),
-        "clientY",
-        this.toFixed(event.clientY),
-        "pressure",
-        this.toFixed(event.pressure),
-        "tiltX",
-        this.toFixed(event.tiltX),
-        "tiltY",
-        this.toFixed(event.tiltY),
-        "pointerType",
-        event.pointerType,
-        "pointerId",
-        event.pointerId,
-        "width",
-        this.toFixed(event.width, 0),
-        "height",
-        this.toFixed(event.height, 0)
-      );
+      
       const x = event.clientX;
       const y = event.clientY;
       const pressure = event.pressure !== undefined ? event.pressure : lastPressure;
@@ -474,7 +455,7 @@
       let width = this._lastWidth;
 
       if(this._lastWidth > this.maxWidth) {
-        radius = this.maxWidth/1.7;
+        radius = this.maxWidth/1.97;
         width = this.maxWidth;
       }
 
@@ -669,7 +650,7 @@
           start: this._lastWidth,
         };
         this._lastWidth = newWidth;
-        console.log("pressure", endPoint.pressure, "newWidth", newWidth);
+        
         return widths;
       } else {
         const velocity =
@@ -677,14 +658,13 @@
           (1 - this.velocityFilterWeight) * this._lastVelocity;
           const pressure_org = 1 / (1 + velocity);
           const pressure_cur = Math.max(1 - velocity * 0.5, 0);
-          console.log("pressure", endPoint.pressure, "pressure_org24", pressure_org, "pressure_cur24", pressure_cur);
           // const newWidth = this._strokeWidth(velocity);
         const newWidth = this._strokeWidth(velocity); // pressure;
         const widths = {
           end: newWidth,
           start: this._lastWidth,
         };
-        console.log("velocity", velocity, "newWidth", newWidth);
+        
         this._lastVelocity = velocity;
         this._lastWidth = newWidth;
         return widths;
