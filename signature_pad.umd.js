@@ -10,7 +10,6 @@
   "use strict";
   let lastPressure = 0.5;
   let isLastPoint = false;
-  let lastW = 0;
 
   class Point {
     constructor(x, y, pressure, time) {
