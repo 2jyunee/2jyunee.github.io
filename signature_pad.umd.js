@@ -437,12 +437,8 @@
     }
     _strokeEnd(event) {
       this._strokeUpdate(event);
+      this._drawLastLine(event);
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
-      setTimeout(()=>{
-        this._drawLastLine(event);
-      });
-      
-      
     }
     _drawLastLine(event) {
       const { _ctx: ctx, canvas } = this;
@@ -577,12 +573,6 @@
 
       ctx.stroke();
       ctx.fill();
-
-
-
-      this._data = [];
-      this._reset();
-      this._isEmpty = true;
     }
     _handlePointerEvents() {
       this._drawningStroke = false;
