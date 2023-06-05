@@ -457,18 +457,90 @@
       let lastX = lastPoints[lastPoints.length-1].x;
       let lastY = lastPoints[lastPoints.length-1].y;
 
-      let rad = Math.abs(Math.atan(lastX - points[0].y)/(lastX - points[0].x));
-      let criteriaRad = Math.abs(10 * (Math.PI/180));
+      //let rad = Math.abs(Math.atan(lastX - points[0].y)/(lastX - points[0].x));
+      // let rad = Math.abs(Math.atan(lastY - points[0].y/lastX - points[0].x));
+      let rad = Math.abs(Math.atan2(Math.abs(lastY - points[0].y), Math.abs(lastX - points[0].x)));
+      let criteriaRad1 = Math.abs(10 * (Math.PI/180));
+      let criteriaRad2 = Math.abs(100 * (Math.PI/180));
+      let criteriaRad3 = Math.abs(80 * (Math.PI/180));
+      let criteriaRad4 = 0;
+      let criteriaRad5 = 0;
+      let criteriaRad6 = 0;
+
       let degree1 = 0;
       let degree2 = 180;
 
 
-      // 수평선에 가까울 때..
-      if((rad < criteriaRad || rad == criteriaRad) && (lastX > points[0].x+30)) {
+      // 기울기가 음수일 때 문제가 생김
+
+
+      // 수평선에 가까울 때
+      // if((rad < criteriaRad1 || rad == criteriaRad1) && lastX > points[0].x+30) {
+      if(rad < criteriaRad1 || rad == criteriaRad1) {
         degree1 = 90;
         degree2 = 270;
-      } 
+        
+        console.log("수평선에 가까울 때");
+      } else if(rad > criteriaRad2 && rad == criteriaRad1) {
+        console.log("수직선에 가까울 때");
+      } else {
+        rad = Math.atan2(lastY - points[points.length-2].y, lastX - points[points.length-2].x);
+        console.log(rad);
+
+        
+        if( rad > 0) {
+          let tempRad = (rad / (Math.PI/180))-90;
+          degree1 = tempRad;
+          degree2 = 180 + tempRad;
+        } else {
+          let tempRad = (rad / (Math.PI/180))+90;
+          degree1 = tempRad;
+          degree2 = 180 - tempRad;
+        }
+        
+        
+
+        console.log(degree1, degree2);
+        // 90~135도 일 때
+        // criteriaRad2 = Math.abs(90 * (Math.PI/180));
+        // criteriaRad3 = Math.abs(135 * (Math.PI/180));
+        // if((rad > criteriaRad2 || rad == criteriaRad2) && rad < criteriaRad3) {
+        //   degree1 = 45;
+        //   degree2 = 225;
+        //   console.log(rad / (Math.PI/180));
+        //   console.log(rad);
+        //   console.log("90~135도 일 때");
+        // }
+
+        // // 135~315도 일 때
+        // criteriaRad2 = Math.abs(135 * (Math.PI/180));
+        // criteriaRad3 = Math.abs(315 * (Math.PI/180));
+
+        // if(rad > criteriaRad2 && rad < criteriaRad3) {
+        //   degree1 = 135;
+        //   degree2 = 315;
+        //   console.log(rad / (Math.PI/180));
+        //   console.log(rad);
+        //   console.log("135~315도 일 때");
+        // }
+
+        // // 45보다 작고 225보다 클 때
+        // criteriaRad4 = Math.abs(45 * (Math.PI/180));
+        // criteriaRad5 = Math.abs(225 * (Math.PI/180));
+        // criteriaRad6 = Math.abs(10 * (Math.PI/180));
+
+        // if((rad < criteriaRad4 && rad > criteriaRad6) || rad > criteriaRad5) {
+        //   degree1 = 45;
+        //   degree2 = 225;
+        //   console.log(rad / (Math.PI/180));
+        //   console.log(rad);
+        //   console.log("45보다 작고 225보다 클 때");
+        // }
+      }
+
       
+
+
 
       const radian = degree1 * (Math.PI/180);
       const radian2 = degree2 * (Math.PI/180);
