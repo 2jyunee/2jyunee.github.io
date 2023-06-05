@@ -481,8 +481,6 @@
         degree2 = 270;
         
         console.log("수평선에 가까울 때");
-      } else if(rad > criteriaRad2 && rad == criteriaRad1) {
-        console.log("수직선에 가까울 때");
       } else {
         rad = Math.atan2(lastY - points[points.length-2].y, lastX - points[points.length-2].x);
         console.log(rad);
