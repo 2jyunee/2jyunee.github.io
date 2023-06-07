@@ -493,7 +493,7 @@
         } else {
           let tempRad = (rad / (Math.PI/180))+90;
           degree1 = tempRad;
-          degree2 = 180 - tempRad;
+          degree2 = 180 + tempRad;
         }
         
         
