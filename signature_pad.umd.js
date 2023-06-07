@@ -458,31 +458,23 @@
       let lastY = lastPoints[lastPoints.length-1].y;
 
       let rad = Math.abs(Math.atan2(Math.abs(lastY - points[0].y), Math.abs(lastX - points[0].x)));
-      let criteriaRad1 = Math.abs(10 * (Math.PI/180));
 
       let degree1 = 0;
       let degree2 = 180;
 
-      // 수평선에 가까울 때
-      // if((rad < criteriaRad1 || rad == criteriaRad1) && lastX > points[0].x+30) {
-      // if(rad < criteriaRad1 || rad == criteriaRad1) {
 
-        // degree1 = 90;
-        // degree2 = 270;
-        // console.log("수평선에 가까울 때");
-      // } else {
-        rad = Math.atan2(lastY - points[points.length-2].y, lastX - points[points.length-2].x);
-        console.log(rad);
-        if( rad > 0) {
-          let tempRad = (rad / (Math.PI/180))-90;
-          degree1 = tempRad;
-          degree2 = 180 + tempRad;
-        } else {
-          let tempRad = (rad / (Math.PI/180))+90;
-          degree1 = tempRad;
-          degree2 = 180 + tempRad;
-        }
-      // }
+      rad = Math.atan2(lastY - points[points.length-2].y, lastX - points[points.length-2].x);
+
+      if( rad > 0) {
+        let tempRad = (rad / (Math.PI/180))-90;
+        degree1 = tempRad;
+        degree2 = 180 + tempRad;
+      } else {
+        let tempRad = (rad / (Math.PI/180))+90;
+        degree1 = tempRad;
+        degree2 = 180 + tempRad;
+      }
+
 
       
       const radian = degree1 * (Math.PI/180);
