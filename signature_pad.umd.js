@@ -194,6 +194,11 @@
     constructor(canvas, options = {}) {
       super();
       this.canvas = canvas;
+
+      // 0620 ADD
+      this._isErasing = false;
+      this._isErasingStart = false;
+
       this._handleMouseDown = (event) => {
         if (event.buttons === 1) {
           this._drawningStroke = true;
@@ -236,24 +241,85 @@
           const touch = event.changedTouches[0];
           this._strokeEnd(touch);
         }
+        
       };
       this._handlePointerStart = (event) => {
-        this._drawningStroke = true;
-        event.preventDefault();
-        this._strokeBegin(event);
-      };
-      this._handlePointerMove = (event) => {
-        if (this._drawningStroke) {
+        // 0620 ADD _ if(this._isErasing) 이하
+        if(this._isErasing) {
+          this._isErasingStart = true;
           event.preventDefault();
-          this._strokeMoveUpdate(event);
+        } else {
+          this._drawningStroke = true;
+          event.preventDefault();
+          this._strokeBegin(event);
         }
       };
+      this._handlePointerMove = (event) => {
+        // 0620 ADD _ if(this._isErasing && this._isErasingStart)이하
+        if(this._isErasing && this._isErasingStart){
+          event.preventDefault();
+          debugger;
+          // 캔버스 상의 좌표를 가져오는 함수를 작성합니다.
+          function getPointOnCanvas (_canvas, x, y){
+            let rect = _canvas.getBoundingClientRect();
+            return {
+              x: x-rect.left,
+              y: y-rect.top
+            }
+          }
+          // 선택된 그리기 데이터를 찾는 함수를 작성합니다.
+          function findSelectedData(_data, point){
+            let data = _data;
+            for(var i=0;i<data.length; i++){
+              var stroke = data[i];
+              if(isPointInStroke(point, stroke)){
+                return stroke;
+              }
+            }
+            return null;
+          }
+          // 점이 그리기 데이터 내에 있는지 확인하는 함수를 작성합니다.
+          function isPointInStroke(point, stroke){
+            let _p = stroke.points;
+            for (let i=0;i<_p.length; i+=2){
+              let x = _p[i].x;
+              let y = _p[i].y;
+              if (Math.abs(point.x - x) < 5 && Math.abs (point.y -y)<5){
+                return true;
+              }
+            }
+            return false;
+          }
+
+          let point = getPointOnCanvas(this.canvas, event.clientX, event.clientY);
+          let selectedData = findSelectedData(this.toData(), point);
+
+          if(selectedData) {
+            // 선택된 그리기 데이터를 제외하고 다시 그립니다.
+            let newData = this.toData().filter(function(stroke) {
+              debugger;
+              return stroke !== selectedData;
+            });
+            this.clear();
+            this.fromData(newData);
+            this._drawLastLine(event);
+            selectedData = null;
+          }
+        } else if(this._drawningStroke) {
+          event.preventDefault();
+          this._strokeMoveUpdate(event);
+        }  
+      };
       this._handlePointerEnd = (event) => {
-        if (this._drawningStroke) {
+        // 0620 ADD if(this._isErasing && this._isErasingStart) 조건
+        if(this._isErasing && this._isErasingStart) {
+          this._isErasingStart = false;
+          event.preventDefault();
+        } else if (this._drawningStroke) {
           event.preventDefault();
           this._drawningStroke = false;
           this._strokeEnd(event);
-        }
+        }        
       };
       this.velocityFilterWeight = options.velocityFilterWeight || 0.8;
       this.usePressure = options.usePressure || false;
@@ -465,6 +531,7 @@
 
       rad = Math.atan2(lastY - points[points.length-2].y, lastX - points[points.length-2].x);
 
+
       if( rad > 0) {
         let tempRad = (rad / (Math.PI/180))-90;
         degree1 = tempRad;
@@ -474,7 +541,6 @@
         degree1 = tempRad;
         degree2 = 180 + tempRad;
       }
-
 
       
       const radian = degree1 * (Math.PI/180);
