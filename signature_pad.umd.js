@@ -504,15 +504,18 @@
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
     }
     _drawLastLine(event, target) {
-      // target param이 존재하는 경우, 지우개 기능에 의한 획의 끝 다시 그리기로 판단
-
+      // target param이 존재하는 경우, 지우개 기능에 의한 획의 끝 다시 그리기
       const { _ctx: ctx } = this;
       isLastPoint = true;
 
       let lastPoints = this._lastPoints;
       let points = this._data[this._data.length-1].points;
+
+      // 포인트가 3개 미만인 경우에는 수행하지 않도록 변경 20230621
+      if(points.length < 3) return;
+
       let lastPointWidth = this._lastWidth;
-      let maxWidthVal = this.maxWidth
+      let maxWidthVal = this.maxWidth;
 
       if(target){
         lastPointWidth = target[target.length-1].lastWidth;
