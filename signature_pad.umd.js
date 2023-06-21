@@ -195,7 +195,6 @@
       super();
       this.canvas = canvas;
 
-      // 0620 ADD
       this._isErasing = false;
       this._isErasingStart = false;
 
@@ -244,7 +243,6 @@
         
       };
       this._handlePointerStart = (event) => {
-        // 0620 ADD _ if(this._isErasing) 이하
         if(this._isErasing) {
           this._isErasingStart = true;
           event.preventDefault();
@@ -255,10 +253,9 @@
         }
       };
       this._handlePointerMove = (event) => {
-        // 0620 ADD _ if(this._isErasing && this._isErasingStart)이하
         if(this._isErasing && this._isErasingStart){
           event.preventDefault();
-          debugger;
+          
           // 캔버스 상의 좌표를 가져오는 함수를 작성합니다.
           function getPointOnCanvas (_canvas, x, y){
             let rect = _canvas.getBoundingClientRect();
@@ -297,12 +294,13 @@
           if(selectedData) {
             // 선택된 그리기 데이터를 제외하고 다시 그립니다.
             let newData = this.toData().filter(function(stroke) {
-              debugger;
               return stroke !== selectedData;
             });
             this.clear();
             this.fromData(newData);
-            this._drawLastLine(event);
+            
+            // 다시 끝 라인을 그려주는 작업 추가
+            this._redrawLastLine(event);
             selectedData = null;
           }
         } else if(this._drawningStroke) {
@@ -311,7 +309,6 @@
         }  
       };
       this._handlePointerEnd = (event) => {
-        // 0620 ADD if(this._isErasing && this._isErasingStart) 조건
         if(this._isErasing && this._isErasingStart) {
           this._isErasingStart = false;
           event.preventDefault();
@@ -506,18 +503,31 @@
       this._drawLastLine(event);
       this.dispatchEvent(new CustomEvent("endStroke", { detail: event }));
     }
-    _drawLastLine(event) {
+    _drawLastLine(event, target) {
+      // target param이 존재하는 경우, 지우개 기능에 의한 획의 끝 다시 그리기로 판단
+
       const { _ctx: ctx } = this;
       isLastPoint = true;
 
-      const lastPoints = this._lastPoints;
-      const points = this._data[this._data.length-1].points;
-      let radius = this._lastWidth/2;
-      let width = this._lastWidth;
+      let lastPoints = this._lastPoints;
+      let points = this._data[this._data.length-1].points;
+      let lastPointWidth = this._lastWidth;
+      let maxWidthVal = this.maxWidth
 
-      if(this._lastWidth > this.maxWidth) {
-        radius = this.maxWidth/1.97;
-        width = this.maxWidth;
+      if(target){
+        lastPointWidth = target[target.length-1].lastWidth;
+        maxWidthVal = target[target.length-1].maxWidth;
+        points = target[target.length-1].points;
+      } else {
+        this._data[this._data.length-1].lastWidth = this._lastWidth;
+      }
+
+      let radius = lastPointWidth/2;
+      let width = lastPointWidth;
+
+      if(lastPointWidth > maxWidthVal) {
+        radius = maxWidthVal/1.97;
+        width = maxWidthVal;
       }
 
       let lastX = lastPoints[lastPoints.length-1].x;
@@ -551,14 +561,17 @@
       const circleX2 = (Math.cos(radian2) * radius) + points[points.length-2].x;
       const circleY2 = (Math.sin(radian2) * radius) + points[points.length-2].y;
 
+      
       ctx.beginPath();
+      if(target) ctx.moveTo(circleX, circleY);
       ctx.lineWidth=width;
+      
 
       // 두 점 사이 거리
       let d = Math.sqrt(Math.pow(circleX2-circleX, 2) + Math.pow(circleY2-circleY, 2));
 
       let gap = 0;
-      if(d > this._lastWidth && d == this._lastWidth) {
+      if(d > lastPointWidth && d == lastPointWidth) {
         gap = 2.5;
       }
 
@@ -584,8 +597,7 @@
 
 
       ctx.fillStyle = "#000000";
-      // ctx.lineWidth = this._strokeWidthByPressure(lastPressure);
-      ctx.lineWidth = this._lastWidth;
+      ctx.lineWidth = lastPointWidth;
 
       var x = circleX-0.5,
           y = circleY;
@@ -646,6 +658,17 @@
 
       ctx.stroke();
       ctx.fill();
+    }
+    _redrawLastLine(event) {
+      // this._data에 있는 모든 pointsGroup에 대해 실행 시켜야 함
+      // lastPoints에 대한 정보를 다시 할당 (마지막 3개)
+      for(var i=0; i<this._data.length; i++) {
+        if(this._data[i].points) {
+          var pLen = this._data[i].points.length;
+          this._lastPoints = this._data[i].points.slice(pLen-3);
+          this._drawLastLine(event, [this._data[i]]);
+        }
+      }
     }
     _handlePointerEvents() {
       this._drawningStroke = false;
@@ -719,9 +742,6 @@
         const velocity =
           this.velocityFilterWeight * endPoint.velocityFrom(startPoint) +
           (1 - this.velocityFilterWeight) * this._lastVelocity;
-          const pressure_org = 1 / (1 + velocity);
-          const pressure_cur = Math.max(1 - velocity * 0.5, 0);
-          // const newWidth = this._strokeWidth(velocity);
         const newWidth = this._strokeWidth(velocity); // pressure;
         const widths = {
           end: newWidth,

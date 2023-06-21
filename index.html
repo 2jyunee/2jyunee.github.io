@@ -203,8 +203,10 @@
           signaturePadPressure._isErasing = true;
         });
 
-
-        
+        document.getElementById("eraseOff").addEventListener("click", function () {
+          // 0620 Add
+          signaturePadPressure._isErasing = false;
+        });        
       };
       function download(dataURL, filename) {
         const blob = dataURLToBlob(dataURL);
@@ -259,6 +261,8 @@
       <button id="clear">Clear</button>
       <button id="getData">toData</button>
       <button id="erase">Eraser</button>
+      <button id="eraseOff">Off Eraser</button>
+
     </div>
     <div>
       <img
